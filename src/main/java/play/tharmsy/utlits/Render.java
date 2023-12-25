@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.*;
+import javax.swing.border.Border;
 
 public class Render {
     private static List<Drawable> drawables = new ArrayList<>();
@@ -46,6 +48,44 @@ public class Render {
             drawables.add(new Drawable(x, y, width, height, true, onClick));
         }
     }
+
+    public static JTextField createInputField(int x, int y, int width, int height, Font font, Color textColor, Color backgroundColor) {
+        JTextField textField = new JTextField();
+        textField.setBounds(x, y, width, height);
+        textField.setFont(font);
+        textField.setForeground(textColor);
+        textField.setBackground(backgroundColor);
+        return textField;
+    }
+
+    public static JTextField createOutlinedInputField(int x, int y, int width, int height, Font font, Color textColor, Color backgroundColor, Color borderColor, float borderThickness) {
+        JTextField textField = createInputField(x, y, width, height, font, textColor, backgroundColor);
+        Border border = BorderFactory.createLineBorder(borderColor, (int) borderThickness);
+        textField.setBorder(border);
+        return textField;
+    }
+
+    public static JTextField RoundedInput(int x, int y, int width, int height, int radius, Font font, Color textColor, Color backgroundColor) {
+        RoundedText textField = new RoundedText(radius);
+        textField.setBounds(x, y, width, height);
+        textField.setFont(font);
+        textField.setForeground(textColor);
+        textField.setBackground(backgroundColor);
+        textField.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        return textField;
+    }
+
+    public static JTextField RoundedOutlinedInput(int x, int y, int width, int height, int radius, Font font, Color textColor, Color backgroundColor, Color borderColor, float borderThickness) {
+        RoundedText textField = new RoundedText(radius);
+        textField.setBounds(x, y, width, height);
+        textField.setFont(font);
+        textField.setForeground(textColor);
+        textField.setBackground(backgroundColor);
+        Border border = BorderFactory.createLineBorder(borderColor, (int) borderThickness);
+        textField.setBorder(border);
+        return textField;
+    }
+
 
     public static void drawImageWithOutline(Graphics g, String imagePath, int x, int y, int width, int height, Color outlineColor, float thickness, boolean isInteractive, Consumer<MouseEvent> onClick) {
         try {
