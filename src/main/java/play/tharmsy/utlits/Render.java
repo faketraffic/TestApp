@@ -1,6 +1,10 @@
 package play.tharmsy.utlits;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Render {
     public static void drawRoundedSquare(Graphics g, int x, int y, int size, int arcWidth, int arcHeight, int red, int green, int blue) {
@@ -9,6 +13,21 @@ public class Render {
         g2d.fillRoundRect(x, y, size, size, arcWidth, arcHeight);
     }
 
+    public static void drawImageWithOutline(Graphics g, String imageName, int x, int y, int width, int height, Color outlineColor, float thickness) {
+        try {
+            // Use full path to load the image (will be fixed later)
+            String fullPath = "C:/Users/tharm/Desktop/Test App/src/main/resources/Test/" + imageName + ".png";
+            BufferedImage image = ImageIO.read(new File(fullPath));
+            g.drawImage(image, x, y, width, height, null);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(outlineColor);
+            g2d.setStroke(new BasicStroke(thickness));
+            g2d.drawRect(x, y, width, height);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error loading image from: " + imageName);
+        }
+    }
     public static void drawOutlineSquare(Graphics g, int x, int y, int size, int red, int green, int blue, float thickness, int arcWidth, int arcHeight) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(new Color(red, green, blue));
